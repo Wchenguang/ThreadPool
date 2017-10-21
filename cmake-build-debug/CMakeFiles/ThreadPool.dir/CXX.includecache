@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/wk1997/Documents/GitHub/ThreadPool/WJob.h
+
+/Users/wk1997/Documents/GitHub/ThreadPool/WThread.h
+pthread.h
+-
+WJob.h
+/Users/wk1997/Documents/GitHub/ThreadPool/WJob.h
+
+/Users/wk1997/Documents/GitHub/ThreadPool/main.cpp
+iostream
+-
+WThread.h
+/Users/wk1997/Documents/GitHub/ThreadPool/WThread.h
+
+/Users/wk1997/Documents/GitHub/ThreadPool/test.cpp
+pthread.h
+-
+iostream
+-
+
