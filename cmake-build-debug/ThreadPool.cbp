@@ -85,16 +85,19 @@
 		<Unit filename="/Users/wk1997/Documents/GitHub/ThreadPool/WJob.h">
 			<Option target="ThreadPool"/>
 		</Unit>
+		<Unit filename="/Users/wk1997/Documents/GitHub/ThreadPool/WThread.cpp">
+			<Option target="ThreadPool"/>
+		</Unit>
 		<Unit filename="/Users/wk1997/Documents/GitHub/ThreadPool/WThread.h">
+			<Option target="ThreadPool"/>
+		</Unit>
+		<Unit filename="/Users/wk1997/Documents/GitHub/ThreadPool/WThreadPool.cpp">
 			<Option target="ThreadPool"/>
 		</Unit>
 		<Unit filename="/Users/wk1997/Documents/GitHub/ThreadPool/WThreadPool.h">
 			<Option target="ThreadPool"/>
 		</Unit>
 		<Unit filename="/Users/wk1997/Documents/GitHub/ThreadPool/main.cpp">
-			<Option target="ThreadPool"/>
-		</Unit>
-		<Unit filename="/Users/wk1997/Documents/GitHub/ThreadPool/test.cpp">
 			<Option target="ThreadPool"/>
 		</Unit>
 		<Unit filename="/Users/wk1997/Documents/GitHub/ThreadPool/CMakeLists.txt">

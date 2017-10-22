@@ -4,8 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/Users/wk1997/Documents/GitHub/ThreadPool/WThread.cpp" "/Users/wk1997/Documents/GitHub/ThreadPool/cmake-build-debug/CMakeFiles/ThreadPool.dir/WThread.cpp.o"
+  "/Users/wk1997/Documents/GitHub/ThreadPool/WThreadPool.cpp" "/Users/wk1997/Documents/GitHub/ThreadPool/cmake-build-debug/CMakeFiles/ThreadPool.dir/WThreadPool.cpp.o"
   "/Users/wk1997/Documents/GitHub/ThreadPool/main.cpp" "/Users/wk1997/Documents/GitHub/ThreadPool/cmake-build-debug/CMakeFiles/ThreadPool.dir/main.cpp.o"
-  "/Users/wk1997/Documents/GitHub/ThreadPool/test.cpp" "/Users/wk1997/Documents/GitHub/ThreadPool/cmake-build-debug/CMakeFiles/ThreadPool.dir/test.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 

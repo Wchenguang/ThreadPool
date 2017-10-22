@@ -81,43 +81,69 @@ CMakeFiles/ThreadPool.dir/main.cpp.o.provides: CMakeFiles/ThreadPool.dir/main.cp
 CMakeFiles/ThreadPool.dir/main.cpp.o.provides.build: CMakeFiles/ThreadPool.dir/main.cpp.o
 
 
-CMakeFiles/ThreadPool.dir/test.cpp.o: CMakeFiles/ThreadPool.dir/flags.make
-CMakeFiles/ThreadPool.dir/test.cpp.o: ../test.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/wk1997/Documents/GitHub/ThreadPool/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/ThreadPool.dir/test.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ThreadPool.dir/test.cpp.o -c /Users/wk1997/Documents/GitHub/ThreadPool/test.cpp
+CMakeFiles/ThreadPool.dir/WThread.cpp.o: CMakeFiles/ThreadPool.dir/flags.make
+CMakeFiles/ThreadPool.dir/WThread.cpp.o: ../WThread.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/wk1997/Documents/GitHub/ThreadPool/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/ThreadPool.dir/WThread.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ThreadPool.dir/WThread.cpp.o -c /Users/wk1997/Documents/GitHub/ThreadPool/WThread.cpp
 
-CMakeFiles/ThreadPool.dir/test.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ThreadPool.dir/test.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/wk1997/Documents/GitHub/ThreadPool/test.cpp > CMakeFiles/ThreadPool.dir/test.cpp.i
+CMakeFiles/ThreadPool.dir/WThread.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ThreadPool.dir/WThread.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/wk1997/Documents/GitHub/ThreadPool/WThread.cpp > CMakeFiles/ThreadPool.dir/WThread.cpp.i
 
-CMakeFiles/ThreadPool.dir/test.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ThreadPool.dir/test.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/wk1997/Documents/GitHub/ThreadPool/test.cpp -o CMakeFiles/ThreadPool.dir/test.cpp.s
+CMakeFiles/ThreadPool.dir/WThread.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ThreadPool.dir/WThread.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/wk1997/Documents/GitHub/ThreadPool/WThread.cpp -o CMakeFiles/ThreadPool.dir/WThread.cpp.s
 
-CMakeFiles/ThreadPool.dir/test.cpp.o.requires:
+CMakeFiles/ThreadPool.dir/WThread.cpp.o.requires:
 
-.PHONY : CMakeFiles/ThreadPool.dir/test.cpp.o.requires
+.PHONY : CMakeFiles/ThreadPool.dir/WThread.cpp.o.requires
 
-CMakeFiles/ThreadPool.dir/test.cpp.o.provides: CMakeFiles/ThreadPool.dir/test.cpp.o.requires
-	$(MAKE) -f CMakeFiles/ThreadPool.dir/build.make CMakeFiles/ThreadPool.dir/test.cpp.o.provides.build
-.PHONY : CMakeFiles/ThreadPool.dir/test.cpp.o.provides
+CMakeFiles/ThreadPool.dir/WThread.cpp.o.provides: CMakeFiles/ThreadPool.dir/WThread.cpp.o.requires
+	$(MAKE) -f CMakeFiles/ThreadPool.dir/build.make CMakeFiles/ThreadPool.dir/WThread.cpp.o.provides.build
+.PHONY : CMakeFiles/ThreadPool.dir/WThread.cpp.o.provides
 
-CMakeFiles/ThreadPool.dir/test.cpp.o.provides.build: CMakeFiles/ThreadPool.dir/test.cpp.o
+CMakeFiles/ThreadPool.dir/WThread.cpp.o.provides.build: CMakeFiles/ThreadPool.dir/WThread.cpp.o
+
+
+CMakeFiles/ThreadPool.dir/WThreadPool.cpp.o: CMakeFiles/ThreadPool.dir/flags.make
+CMakeFiles/ThreadPool.dir/WThreadPool.cpp.o: ../WThreadPool.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/wk1997/Documents/GitHub/ThreadPool/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/ThreadPool.dir/WThreadPool.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ThreadPool.dir/WThreadPool.cpp.o -c /Users/wk1997/Documents/GitHub/ThreadPool/WThreadPool.cpp
+
+CMakeFiles/ThreadPool.dir/WThreadPool.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ThreadPool.dir/WThreadPool.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/wk1997/Documents/GitHub/ThreadPool/WThreadPool.cpp > CMakeFiles/ThreadPool.dir/WThreadPool.cpp.i
+
+CMakeFiles/ThreadPool.dir/WThreadPool.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ThreadPool.dir/WThreadPool.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/wk1997/Documents/GitHub/ThreadPool/WThreadPool.cpp -o CMakeFiles/ThreadPool.dir/WThreadPool.cpp.s
+
+CMakeFiles/ThreadPool.dir/WThreadPool.cpp.o.requires:
+
+.PHONY : CMakeFiles/ThreadPool.dir/WThreadPool.cpp.o.requires
+
+CMakeFiles/ThreadPool.dir/WThreadPool.cpp.o.provides: CMakeFiles/ThreadPool.dir/WThreadPool.cpp.o.requires
+	$(MAKE) -f CMakeFiles/ThreadPool.dir/build.make CMakeFiles/ThreadPool.dir/WThreadPool.cpp.o.provides.build
+.PHONY : CMakeFiles/ThreadPool.dir/WThreadPool.cpp.o.provides
+
+CMakeFiles/ThreadPool.dir/WThreadPool.cpp.o.provides.build: CMakeFiles/ThreadPool.dir/WThreadPool.cpp.o
 
 
 # Object files for target ThreadPool
 ThreadPool_OBJECTS = \
 "CMakeFiles/ThreadPool.dir/main.cpp.o" \
-"CMakeFiles/ThreadPool.dir/test.cpp.o"
+"CMakeFiles/ThreadPool.dir/WThread.cpp.o" \
+"CMakeFiles/ThreadPool.dir/WThreadPool.cpp.o"
 
 # External object files for target ThreadPool
 ThreadPool_EXTERNAL_OBJECTS =
 
 ThreadPool: CMakeFiles/ThreadPool.dir/main.cpp.o
-ThreadPool: CMakeFiles/ThreadPool.dir/test.cpp.o
+ThreadPool: CMakeFiles/ThreadPool.dir/WThread.cpp.o
+ThreadPool: CMakeFiles/ThreadPool.dir/WThreadPool.cpp.o
 ThreadPool: CMakeFiles/ThreadPool.dir/build.make
 ThreadPool: CMakeFiles/ThreadPool.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/wk1997/Documents/GitHub/ThreadPool/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable ThreadPool"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/wk1997/Documents/GitHub/ThreadPool/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable ThreadPool"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ThreadPool.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -126,7 +152,8 @@ CMakeFiles/ThreadPool.dir/build: ThreadPool
 .PHONY : CMakeFiles/ThreadPool.dir/build
 
 CMakeFiles/ThreadPool.dir/requires: CMakeFiles/ThreadPool.dir/main.cpp.o.requires
-CMakeFiles/ThreadPool.dir/requires: CMakeFiles/ThreadPool.dir/test.cpp.o.requires
+CMakeFiles/ThreadPool.dir/requires: CMakeFiles/ThreadPool.dir/WThread.cpp.o.requires
+CMakeFiles/ThreadPool.dir/requires: CMakeFiles/ThreadPool.dir/WThreadPool.cpp.o.requires
 
 .PHONY : CMakeFiles/ThreadPool.dir/requires
 

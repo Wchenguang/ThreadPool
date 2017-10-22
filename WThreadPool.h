@@ -1,35 +1,107 @@
+#ifndef WTHREADPOOL_H
+#define WTHREADPOOL_H
+
 #include <iostream>
+#include <queue>
+#include <List>
+#include <pthread.h>
+
+#include "WThread.h"
+
+//线程类型
+typedef pthread_t STD_THREAD_TYPE;
 
 //线程子函数
 typedef void *(*TASK_FUNC_TYPE)(void*);
 
+typedef short POOL_STATE_TYPE;
+
+
+
+
 class WThreadPool{
 private:
-    static const int initThreadNum = 25;
 
+
+
+    //初始化线程数
+    static const int initThreadNum = 15;
+    //线程数
     size_t curThreadNum;
-    pthread_t dispatchThread;
+    //用于创建线程分派任务的线程
+    STD_THREAD_TYPE dispatchThread;
+    //忙碌线程队列
+    std::list<WThread *> busyLine;
+    //空闲线程队列
+    std::list<WThread *> idleLine;
+    //任务队列
+    std::queue<WJob*> jobLine;
+    //线程锁
+    pthread_mutex_t myMutex;
+    //分派线程等待任务条件变量
+    pthread_cond_t DisWaitJobCond;
+    //分派线程等待空线程
+    pthread_cond_t DisWaitThreadCond;
+    //待处理任务数量
+    size_t jobNum;
+    //线程池状态
+    POOL_STATE_TYPE poolState;
 
 public:
 
-    static void *run(WThreadPool *pool){
+    static const short P_RUNNING = 0x1;
+    static const short P_SLEEP = 0x2;
+    static const short P_EXIT = 0x4;
 
-    }
+    static void *run(WThreadPool *pool);
 
-    WThreadPool() : curThreadNum(initThreadNum){
+    WThreadPool();
 
-    }
+    void pushJob(WJob *job);
 
-    void setThreadNum(size_t num){
-        curThreadNum = num;
-    }
+    bool hasWaitingThread();
 
-    void start(){
+    bool hasWaitingJob();
 
-        TASK_FUNC_TYPE func = (TASK_FUNC_TYPE)WThreadPool::run;
+    void pushToIdleLine(WThread *thread);
 
-        pthread_create(&dispatchThread, NULL, func, this);
+    void pushToBusyLine(WThread *thread);
+
+    WJob *popJob();
+
+    WThread *popIdleLine();
+
+    WThread *popBusyLine();
 
 
-    }
+    void removeFromBusyLine(WThread *thread);
+
+    int getjobNum();
+
+    void setThreadNum(size_t num);
+
+    size_t getThreadNum();
+
+    pthread_mutex_t *getMyMutex();
+
+    pthread_cond_t *getDisWaitJobCond();
+
+    pthread_cond_t *getDisWaitThreadCond();
+
+    std::list<WThread*> &getBusyLine();
+
+    std::list<WThread*> &getIdleLine();
+
+    std::queue<WJob*> &getJobLine();
+
+    STD_THREAD_TYPE &getDispatchThread();
+
+    bool tryTerminate();
+
+
+    void start();
+
+    POOL_STATE_TYPE getState();
 };
+
+#endif

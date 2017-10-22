@@ -2,9 +2,13 @@
  * 线程的封装
  */
 
+#ifndef _WTHREAD_H
+#define _WTHREAD_H
+
 #include <pthread.h>
 
 #include "WJob.h"
+
 
 //线程类型
 typedef pthread_t STD_THREAD_TYPE;
@@ -15,80 +19,53 @@ typedef void *(*TASK_FUNC_TYPE)(void*);
 
 
 class WThread{
-    //线程状态
-    static const THRED_STATE_TYPE T_SLEEP = 0x1;
-    static const THRED_STATE_TYPE T_RUNNING = 0x2;
-    static const THRED_STATE_TYPE T_EXIT = 0x4;
+    //绑定的threadPool
+    void *threadPool;
+
 
     //互斥锁
     pthread_mutex_t myMutex;
     //条件变量
     pthread_cond_t myCond;
 
+
+
 private:
     THRED_STATE_TYPE myState;
     WJob *myJob;
     STD_THREAD_TYPE myThread;
 
+    int id;
 
 public:
-    void setState(THRED_STATE_TYPE type){
-        myState = type;
-    }
+    //线程状态
+    static const THRED_STATE_TYPE T_SLEEP = 0x1;
+    static const THRED_STATE_TYPE T_RUNNING = 0x2;
+    static const THRED_STATE_TYPE T_EXIT = 0x4;
 
-    WThread() : myState(T_SLEEP), myJob(EMPTY_JOB)  {
-        myMutex = PTHREAD_MUTEX_INITIALIZER;
-        myCond = PTHREAD_COND_INITIALIZER;
-    };
+    WThread(void *pool, int Id);
 
-    static void *run(WThread *wThread){
-        wThread->setState(T_RUNNING);
-        pthread_mutex_t *mutex = wThread->getMutex();
-        pthread_cond_t *cond = wThread->getCond();
+    void setState(THRED_STATE_TYPE type);
 
-        while (wThread->getJob() == EMPTY_JOB){
+    THRED_STATE_TYPE getState();
 
-            pthread_cond_wait(cond, mutex);
-        }
+    static void *run(WThread *wThread);
 
+    void setJob(WJob *job, bool isSignal);
 
-        void *res =  wThread->getJob()->run();
+    WJob *getJob();
 
+    pthread_cond_t *getCond();
 
-        return res;
+    pthread_mutex_t *getMutex();
 
-    }
+    void start();
 
-    void setJob(WJob *job){
-        pthread_mutex_lock(&myMutex);
+    STD_THREAD_TYPE &getMyThread();
 
-        myJob = job;
+    void *getThreadPool();
 
-        pthread_mutex_unlock(&myMutex);
-
-        pthread_cond_signal(&myCond);
-    }
-
-    WJob *getJob(){
-        return myJob;
-    }
-
-    pthread_cond_t *getCond(){
-        return &myCond;
-    }
-
-    pthread_mutex_t *getMutex(){
-        return &myMutex;
-    }
-
-    void start(){
-
-        TASK_FUNC_TYPE taskFunc = (TASK_FUNC_TYPE)WThread::run;
-
-        pthread_create(&myThread, NULL, taskFunc, this);
-    }
-
-    STD_THREAD_TYPE &getMyThread(){
-        return myThread;
-    }
+    int getId();
 };
+
+#endif

@@ -6,7 +6,9 @@ set(CMAKE_CXX_STANDARD 11)
 set(SOURCE_FILES main.cpp
         WJob.h
         WThread.h
-        test.cpp
+        WThread.cpp
         WThreadPool.h
+        WThreadPool.cpp
+
         )
 add_executable(ThreadPool ${SOURCE_FILES})

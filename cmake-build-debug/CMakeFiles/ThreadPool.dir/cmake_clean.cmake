@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/ThreadPool.dir/main.cpp.o"
-  "CMakeFiles/ThreadPool.dir/test.cpp.o"
+  "CMakeFiles/ThreadPool.dir/WThread.cpp.o"
+  "CMakeFiles/ThreadPool.dir/WThreadPool.cpp.o"
   "ThreadPool.pdb"
   "ThreadPool"
 )

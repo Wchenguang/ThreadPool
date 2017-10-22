@@ -1,35 +1,44 @@
 #include <iostream>
+#include <fstream>
 
-#include "WThread.h"
+#include "WThreadPool.h"
 
 using namespace std;
 
-class jb : public WJob{
+class job : public WJob{
 private:
     int a;
+    fstream file;
 public:
-    jb(){
-        a = 1;
+    job(int aa){
+        a = aa;
     }
     void *run(){
-        std::cout<<"hello "<<a<<endl;
+        char ch[5] = {'0'};
+        ch[0] = 'a' + a;
+        file.open(ch, std::fstream::out);
+        for(int i = 0; i < 1000; ++i){
+            file.write("good\n", 5);
+        }
+        file.close();
+        ch[1] = ' ';
+        cerr<<ch;
     }
 };
 
 int main(){
 
-    WThread thread;
+    WThreadPool pool;
 
-    thread.start();
+    pool.start();
 
-    for(int i = 0; i < 100; ++i){
-        cout<<i<<endl;
+    for(int i = 0; i < 26; ++i){
+        pool.pushJob(new job(i));
     }
 
-    thread.setJob(new jb());
+    pthread_join(pool.getDispatchThread(), NULL);
 
-
-    pthread_join(thread.getMyThread(), NULL);
+    while (!pool.tryTerminate());
 
     return 0;
 }
