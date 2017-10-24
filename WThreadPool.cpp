@@ -33,7 +33,6 @@ void *WThreadPool::run(WThreadPool *pool){
         pthread_mutex_unlock(myMutex);
 
         while (!pool->hasWaitingThread()){
-            //std::cout<<pool->getIdleLine().size()<<std::endl;
             pthread_cond_wait(myDisWaitThreadCond, myMutex);
         }
         pthread_mutex_lock(myMutex);
@@ -44,27 +43,49 @@ void *WThreadPool::run(WThreadPool *pool){
         thread->setJob(job, true);
     }
 
+    std::cerr<<"dispath end\n";
     return NULL;
 }
 
-WThreadPool::WThreadPool() : curThreadNum(initThreadNum), jobNum(0), poolState(P_SLEEP){
+void *WThreadPool::TerminateAll(WThreadPool *pool) {
+    std::list<WThread*> &idleLine = pool->getIdleLine();
 
+    for(auto thr : idleLine){
+        thr->setState(WThread::T_EXIT);
+        thr->setJob((WJob*)1, true);
+    }
+
+    std::cerr<<"all son thread exit\n";
+    pthread_exit(NULL);
+}
+
+WThreadPool::WThreadPool() : curThreadNum(initThreadNum), jobNum(0), poolState(P_SLEEP){
+    //TerminateThreadCond = PTHREAD_COND_INITIALIZER;
+    //DisWaitJobCond = PTHREAD_COND_INITIALIZER;
+    //DisWaitThreadCond = PTHREAD_COND_INITIALIZER;
+    //myMutex = PTHREAD_MUTEX_INITIALIZER;
 }
 
 bool WThreadPool::tryTerminate() {
     pthread_mutex_lock(&myMutex);
+    std::cerr<<jobLine.size()<<" "<<busyLine.size()<<std::endl;
     if(jobLine.empty() && busyLine.empty()){
-        for(auto thr : idleLine){
-            thr->setState(WThread::T_EXIT);
-            thr->setJob((WJob*)1, true);
-        }
+        pthread_t terminateThread;
+
+        TASK_FUNC_TYPE func = (TASK_FUNC_TYPE)WThreadPool::TerminateAll;
+        pthread_create(&terminateThread, NULL, func, this);
+        pthread_join(dispatchThread, NULL);
+
+        std::cerr<<"shit"<<std::endl;
+
         poolState = P_EXIT;
-        pthread_cond_signal(&DisWaitJobCond);
+        pthread_cond_signal(&DisWaitThreadCond);
 
         pthread_mutex_unlock(&myMutex);
         return true;
     }else{
         pthread_mutex_unlock(&myMutex);
+        //pthread_cond_wait(&TerminateThreadCond, &myMutex);
         return false;
     }
 
@@ -104,6 +125,7 @@ WJob *WThreadPool::popJob(){
     pthread_mutex_lock(&myMutex);
     WJob *job = jobLine.front();
     jobLine.pop();
+    jobNum = jobLine.size();
     pthread_mutex_unlock(&myMutex);
     return job;
 }
@@ -113,6 +135,7 @@ WThread *WThreadPool::popIdleLine(){
     WThread *thread = idleLine.front();
     idleLine.pop_front();
     pthread_mutex_unlock(&myMutex);
+    //pthread_cond_signal(&TerminateThreadCond);
     return thread;
 }
 
@@ -172,6 +195,10 @@ STD_THREAD_TYPE &WThreadPool::getDispatchThread(){
 
 POOL_STATE_TYPE WThreadPool::getState(){
     return poolState;
+}
+
+void WThreadPool::setState(POOL_STATE_TYPE state){
+    poolState = state;
 }
 
 void WThreadPool::start(){

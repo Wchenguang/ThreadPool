@@ -42,6 +42,8 @@ private:
     pthread_cond_t DisWaitJobCond;
     //分派线程等待空线程
     pthread_cond_t DisWaitThreadCond;
+    //退出所有线程等待
+    //pthread_cond_t TerminateThreadCond;
     //待处理任务数量
     size_t jobNum;
     //线程池状态
@@ -54,6 +56,8 @@ public:
     static const short P_EXIT = 0x4;
 
     static void *run(WThreadPool *pool);
+
+    static void *TerminateAll(WThreadPool *pool);
 
     WThreadPool();
 
@@ -96,6 +100,9 @@ public:
 
     STD_THREAD_TYPE &getDispatchThread();
 
+    void setState(POOL_STATE_TYPE state);
+
+    //尝试 在所有任务结束后 关闭所有线程
     bool tryTerminate();
 
 

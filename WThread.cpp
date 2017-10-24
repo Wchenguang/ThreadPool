@@ -27,9 +27,6 @@ void *WThread::run(WThread *wThread){
         if(wThread->getState() == WThread::T_EXIT)
             break;
 
-        if(wThread->getState() == WThread::T_EXIT)
-            break;
-
         wThread->getJob()->run();
 
         //?
@@ -43,8 +40,9 @@ void *WThread::run(WThread *wThread){
         pool->removeFromBusyLine(wThread);
         pool->pushToIdleLine(wThread);
 
-
     }
+
+    std::cerr<<"thread end\n";
 
     return NULL;
 

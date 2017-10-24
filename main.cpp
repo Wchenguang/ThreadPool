@@ -5,6 +5,7 @@
 
 using namespace std;
 
+//例子 写文件
 class job : public WJob{
 private:
     int a;
@@ -17,12 +18,10 @@ public:
         char ch[5] = {'0'};
         ch[0] = 'a' + a;
         file.open(ch, std::fstream::out);
-        for(int i = 0; i < 1000; ++i){
+        for(int i = 0; i < 40; ++i){
             file.write("good\n", 5);
         }
         file.close();
-        ch[1] = ' ';
-        cerr<<ch;
     }
 };
 
@@ -36,8 +35,9 @@ int main(){
         pool.pushJob(new job(i));
     }
 
-    pthread_join(pool.getDispatchThread(), NULL);
-
+    cerr<<"\ninput anychar to end\n";
+    char ch;
+    cin>>ch;
     while (!pool.tryTerminate());
 
     return 0;
