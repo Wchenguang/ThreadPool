@@ -1,114 +1,89 @@
-#ifndef WTHREADPOOL_H
-#define WTHREADPOOL_H
+#ifndef _WTHREADPOOL_H
+#define _WTHREADPOOL_H
 
-#include <iostream>
+#include <thread>
 #include <queue>
-#include <List>
-#include <pthread.h>
+#include <vector>
 
 #include "WThread.h"
-
-//线程类型
-typedef pthread_t STD_THREAD_TYPE;
-
-//线程子函数
-typedef void *(*TASK_FUNC_TYPE)(void*);
-
-typedef short POOL_STATE_TYPE;
-
-
-
+#include "TS_List.h"
+#include "TS_Queue.h"
 
 class WThreadPool{
+public:
+    enum class POOL_STATE{
+        P_RUNNING,
+        P_EXIT,
+        P_SLEEP
+    };
 private:
 
+    friend class WThread;
 
+    //退出的标志任务
+    WJob *EXITJOB = (WJob*)1;
 
     //初始化线程数
     static const int initThreadNum = 15;
     //线程数
     size_t curThreadNum;
-    //用于创建线程分派任务的线程
-    STD_THREAD_TYPE dispatchThread;
+
+    //用于 静态保存 池内线程的指针
+    std::vector<WThread*> pThreadVec;
     //忙碌线程队列
-    std::list<WThread *> busyLine;
+    TS_List<WThread *> busyLine;
     //空闲线程队列
-    std::list<WThread *> idleLine;
+    TS_List<WThread *> idleLine;
     //任务队列
-    std::queue<WJob*> jobLine;
+    TS_Queue<WJob*> jobLine;
     //线程锁
-    pthread_mutex_t myMutex;
+    std::mutex mMutex;
     //分派线程等待任务条件变量
-    pthread_cond_t DisWaitJobCond;
+    std::condition_variable DisWaitJobCond;
     //分派线程等待空线程
-    pthread_cond_t DisWaitThreadCond;
-    //退出所有线程等待
-    //pthread_cond_t TerminateThreadCond;
+    std::condition_variable DisWaitThreadCond;
+    //初始化运行线程池 变量
+    std::condition_variable initPoolCond;
     //待处理任务数量
     size_t jobNum;
     //线程池状态
-    POOL_STATE_TYPE poolState;
+    POOL_STATE poolState;
 
-public:
+    //用于创建线程分派任务的线程
+    std::thread *dispatchThread;
 
-    static const short P_RUNNING = 0x1;
-    static const short P_SLEEP = 0x2;
-    static const short P_EXIT = 0x4;
+    //分发线程的函数
+    void run();
 
-    static void *run(WThreadPool *pool);
-
-    static void *TerminateAll(WThreadPool *pool);
-
-    WThreadPool();
-
-    void pushJob(WJob *job);
-
-    bool hasWaitingThread();
-
-    bool hasWaitingJob();
-
+    //将线程压入空闲队列
     void pushToIdleLine(WThread *thread);
-
+    //压入忙碌队列
     void pushToBusyLine(WThread *thread);
-
-    WJob *popJob();
-
-    WThread *popIdleLine();
-
-    WThread *popBusyLine();
-
-
+    //找到并从忙碌队列中移除
     void removeFromBusyLine(WThread *thread);
 
-    int getjobNum();
+public:
+    WThreadPool();
 
-    void setThreadNum(size_t num);
+    WThreadPool(size_t threadNum);
 
-    size_t getThreadNum();
+    virtual ~WThreadPool();
 
-    pthread_mutex_t *getMyMutex();
+    WThreadPool(const WThreadPool &) = delete;
+    WThreadPool(WThreadPool &&) = delete;
+    WThreadPool &operator = (const WThreadPool&) = delete;
 
-    pthread_cond_t *getDisWaitJobCond();
-
-    pthread_cond_t *getDisWaitThreadCond();
-
-    std::list<WThread*> &getBusyLine();
-
-    std::list<WThread*> &getIdleLine();
-
-    std::queue<WJob*> &getJobLine();
-
-    STD_THREAD_TYPE &getDispatchThread();
-
-    void setState(POOL_STATE_TYPE state);
-
-    //尝试 在所有任务结束后 关闭所有线程
-    bool tryTerminate();
-
-
+    //开始接受任务
     void start();
 
-    POOL_STATE_TYPE getState();
+    //添加job
+    void pushJob(WJob *job);
+
+    //用于父线程 输入任意字符结束
+    void getCharToTerminate();
+
+
+
 };
 
 #endif

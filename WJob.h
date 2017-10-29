@@ -6,13 +6,9 @@
 #ifndef _WJOB_H
 #define _WJOB_H
 
-
-//空
-#define EMPTY_JOB NULL
-
 class WJob{
 public:
-    virtual void *run() = 0;
+    virtual void run() = 0;
 };
 
 #endif

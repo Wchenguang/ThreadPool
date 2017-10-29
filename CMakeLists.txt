@@ -9,6 +9,7 @@ set(SOURCE_FILES main.cpp
         WThread.cpp
         WThreadPool.h
         WThreadPool.cpp
-
+        TS_List.h
+        TS_Queue.h
         )
 add_executable(ThreadPool ${SOURCE_FILES})

@@ -1,11 +1,9 @@
-#include <iostream>
-#include <fstream>
-
 #include "WThreadPool.h"
+#include <fstream>
 
 using namespace std;
 
-//例子 写文件
+//测试job写文件
 class job : public WJob{
 private:
     int a;
@@ -14,20 +12,21 @@ public:
     job(int aa){
         a = aa;
     }
-    void *run(){
-        char ch[5] = {'0'};
-        ch[0] = 'a' + a;
-        file.open(ch, std::fstream::out);
-        for(int i = 0; i < 40; ++i){
+    void run(){
+        string str= to_string(a);
+        cerr<<str;
+        file.open(str.c_str(), std::fstream::out);
+        for(int i = 0; i < 77870; ++i){
             file.write("good\n", 5);
         }
         file.close();
     }
 };
 
+
 int main(){
 
-    WThreadPool pool;
+    WThreadPool pool(17);
 
     pool.start();
 
@@ -35,10 +34,8 @@ int main(){
         pool.pushJob(new job(i));
     }
 
-    cerr<<"\ninput anychar to end\n";
-    char ch;
-    cin>>ch;
-    while (!pool.tryTerminate());
+    //任意输入字符结束
+    pool.getCharToTerminate();
 
-    return 0;
 }
+

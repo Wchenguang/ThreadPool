@@ -82,6 +82,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/wk1997/Documents/GitHub/ThreadPool/TS_List.h">
+			<Option target="ThreadPool"/>
+		</Unit>
+		<Unit filename="/Users/wk1997/Documents/GitHub/ThreadPool/TS_Queue.h">
+			<Option target="ThreadPool"/>
+		</Unit>
 		<Unit filename="/Users/wk1997/Documents/GitHub/ThreadPool/WJob.h">
 			<Option target="ThreadPool"/>
 		</Unit>

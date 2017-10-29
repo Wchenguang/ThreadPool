@@ -1,71 +1,71 @@
-/*
- * 线程的封装
- */
-
 #ifndef _WTHREAD_H
 #define _WTHREAD_H
 
-#include <pthread.h>
+#include <thread>
+#include <iostream>
+#include <string>
 
 #include "WJob.h"
 
-
-//线程类型
-typedef pthread_t STD_THREAD_TYPE;
-//线程状态
-typedef short THRED_STATE_TYPE;
-//线程子函数
-typedef void *(*TASK_FUNC_TYPE)(void*);
+class WThreadPool;
 
 
 class WThread{
-    //绑定的threadPool
-    void *threadPool;
+public:
 
-
-    //互斥锁
-    pthread_mutex_t myMutex;
-    //条件变量
-    pthread_cond_t myCond;
-
-
+    //线程状态
+    enum class THREAD_STATE{
+        T_RUNNING,
+        T_EXIT,
+        T_WAITING
+    };
 
 private:
-    THRED_STATE_TYPE myState;
-    WJob *myJob;
-    STD_THREAD_TYPE myThread;
+    //线程id
+    size_t mId;
+    //线程的函数
+    WJob *mJob;
+    //线程 初始即运行
+    std::thread *pmThread;
+    //全局锁
+    std::mutex mMutex;
+    //等待工作的条件变量
+    std::condition_variable waitJobCond;
+    //所关联的线程池
+    WThreadPool &pool;
+    //线程状态
+    THREAD_STATE mState;
 
-    int id;
+    //线程运行的函数
+    void run();
 
 public:
-    //线程状态
-    static const THRED_STATE_TYPE T_SLEEP = 0x1;
-    static const THRED_STATE_TYPE T_RUNNING = 0x2;
-    static const THRED_STATE_TYPE T_EXIT = 0x4;
 
-    WThread(void *pool, int Id);
 
-    void setState(THRED_STATE_TYPE type);
+    WThread(WThreadPool &Wpool, size_t id);
 
-    THRED_STATE_TYPE getState();
+    WThread(WThreadPool &Wpool);
 
-    static void *run(WThread *wThread);
+    virtual ~WThread();
+    //不可 赋值 复制
+    WThread(const WThread &) = delete;
+    WThread(const WThread &&) = delete;
+    WThread &operator = (const WThread&) = delete;
 
-    void setJob(WJob *job, bool isSignal);
+    //设置工作并发布信号
+    //无法分辨 job 是栈变量还是堆变量 因此不尝试释放
+    //为了提高效率 也不拷贝
+    bool setJob(WJob *job);
 
-    WJob *getJob();
+    //结束
+    //是否该结束 由上层来判断
+    void terminate();
 
-    pthread_cond_t *getCond();
+    //将父线程挂起
+    void join();
 
-    pthread_mutex_t *getMutex();
+    bool joinable();
 
-    void start();
-
-    STD_THREAD_TYPE &getMyThread();
-
-    void *getThreadPool();
-
-    int getId();
 };
 
 #endif
