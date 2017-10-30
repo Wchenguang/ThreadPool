@@ -12,6 +12,7 @@ public:
     job(int aa){
         a = aa;
     }
+    job() : job(-1) {};
     void run(){
         string str= to_string(a);
         cerr<<str;
@@ -26,16 +27,19 @@ public:
 
 int main(){
 
+    job *jobs = new job[26];
+
     WThreadPool pool(17);
 
     pool.start();
 
     for(int i = 0; i < 26; ++i){
-        pool.pushJob(new job(i));
+        pool.pushJob(&jobs[i]);
     }
 
     //任意输入字符结束
     pool.getCharToTerminate();
 
+    delete [] jobs;
 }
 
